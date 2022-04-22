@@ -20,15 +20,19 @@ class MainActivity : AppCompatActivity() {
         binding.bNav?.selectedItemId = R.id.item3
         binding.bNav?.setOnItemSelectedListener {
             when(it.itemId) {
+
                 R.id.item1 -> {
-                    Toast.makeText(this, "launched", Toast.LENGTH_SHORT).show()
+
                 }
+
                 R.id.item2 -> {
-                    Toast.makeText(this, "launched", Toast.LENGTH_SHORT).show()
+
                 }
+
                 R.id.item3 -> {
-                    Toast.makeText(this, "launched", Toast.LENGTH_SHORT).show()
+
                 }
+
             }
             true
         }
