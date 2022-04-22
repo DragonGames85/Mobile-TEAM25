@@ -15,9 +15,10 @@
         android:text="Скрыть авторов"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.771" />
+        app:layout_constraintVertical_bias="0.881" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -98,23 +99,10 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.162" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bNav"
-        android:layout_width="409dp"
-        android:layout_height="63dp"
-        android:background="#03A9F4"
-        app:itemIconTint="@drawable/bottom_nav_selector"
-        app:itemRippleColor="#000000"
-        app:itemTextColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu" />
+        app:layout_constraintVertical_bias="0.083" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
