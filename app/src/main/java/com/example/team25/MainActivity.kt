@@ -11,14 +11,14 @@ import com.example.team25.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var bindi: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindi = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(bindi.root)
-        bindi.bNav?.selectedItemId = R.id.item3
-        bindi.bNav?.setOnItemSelectedListener {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.bNav?.selectedItemId = R.id.item3
+        binding.bNav?.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.item1 -> {
                     Toast.makeText(this, "launched", Toast.LENGTH_SHORT).show()
