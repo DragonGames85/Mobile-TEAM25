@@ -1,4 +1,4 @@
 package com.example.team25
 
-class Interpreter {
+open class Token {
 }
