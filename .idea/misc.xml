@@ -3,6 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout-land/activity_main.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/custom_edittext_layout.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_authors.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_blocks.xml" value="0.536" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_first.xml" value="0.264" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_game_test.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_game_testing.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_main_project.xml" value="0.2345679012345679" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/fragment_second.xml" value="0.264" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/game_test.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/layout/simple_list_item_1.xml" value="0.10885416666666667" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/menu/bottom_menu.xml" value="0.2" />
+        <entry key="..\:/Users/danil/AndroidStudioProjects/Mobile-TEAM25/app/src/main/res/menu/main_menu.xml" value="0.4" />
         <entry key="..\:/Users/danil/AndroidStudioProjects/Team25/app/src/main/res/drawable/bottom_nav_selector.xml" value="0.2335" />
         <entry key="..\:/Users/danil/AndroidStudioProjects/Team25/app/src/main/res/drawable/ic_launch.xml" value="0.2165" />
         <entry key="..\:/Users/danil/AndroidStudioProjects/Team25/app/src/main/res/layout-land/activity_main.xml" value="0.2421875" />
