@@ -28,15 +28,13 @@ class Program(val listOfToken: MutableList<Token>) {
         fun Operation_3(){
             var operator = steck.removeLast()
         }
-        fun Operation_4(){
-            print(result)
-        }
+
         fun forPlus(this_operand:String) {
             var operand = steck.last()
             if(operand =="<" || operand ==">"){Operation_1(this_operand)}
             if (operand == "+" || operand == "-"){Operation_2()}
             if (operand == "*"){Operation_2()}
-            if (operand == "/"){Operation_2()}
+            if (operand == "/" || operand == "%"){Operation_2()}
             if (operand == "("){Operation_1(this_operand)}
         }
         fun forMultiplication(this_operand:String){
@@ -44,7 +42,7 @@ class Program(val listOfToken: MutableList<Token>) {
             if(operand =="<" || operand ==">"){Operation_1("*")}
             if (operand == "+" || operand == "-"){Operation_1("*")}
             if (operand == "*"){Operation_2()}
-            if (operand == "/"){Operation_2()}
+            if (operand == "/" || operand == "%"){Operation_2()}
             if (operand == "("){Operation_1(this_operand)}
         }
         fun forDivision(this_operand:String){
@@ -52,15 +50,14 @@ class Program(val listOfToken: MutableList<Token>) {
             if(operand =="<" || operand ==">"){Operation_1(this_operand)}
             if (operand == "+" || operand == "-"){Operation_1(this_operand)}
             if (operand == "*"){Operation_2()}
-            if (operand == "/"){ Operation_2()}
+            if (operand == "/" || operand == "%"){ Operation_2()}
             if (operand == "("){Operation_1(this_operand)}
         }
         fun forEndString(this_operand:String){
             var operand = steck.last()
-            if(operand =="<" || operand ==">"){Operation_4()}
             if (operand == "+" || operand == "-"){Operation_2()}
             if (operand == "*"){Operation_2()}
-            if (operand == "/"){ Operation_2()}
+            if (operand == "/" || operand == "%"){ Operation_2()}
             if (operand == ")"){print("expression input error")}
             if (operand == "("){print("expression input error")}
         }
@@ -69,7 +66,7 @@ class Program(val listOfToken: MutableList<Token>) {
             if(operand =="<" || operand ==">"){Operation_1(this_operand)}
             if (operand == "+" || operand == "-"){Operation_1(this_operand)}
             if (operand == "*"){Operation_1(this_operand)}
-            if (operand == "/"){ Operation_1(this_operand)}
+            if (operand == "/" || operand == "%"){ Operation_1(this_operand)}
             if (operand == ")"){Operation_1(this_operand)}
         }
         fun forEnd(this_operand:String){
@@ -77,8 +74,16 @@ class Program(val listOfToken: MutableList<Token>) {
             if(operand =="<" || operand ==">"){print("expression input error")}
             if (operand == "+" || operand == "-"){Operation_2()}
             if (operand == "*"){Operation_2()}
-            if (operand == "/"){ Operation_2()}
+            if (operand == "/" || operand == "%"){ Operation_2()}
             if (operand == "("){Operation_3()}
+        }
+        fun forRemainder(this_operand:String){
+            var operand = steck.last()
+            if(operand =="<" || operand ==">"){Operation_1(this_operand)}
+            if (operand == "+" || operand == "-"){Operation_1(this_operand)}
+            if (operand == "*"){Operation_2()}
+            if (operand == "/" || operand == "%"){ Operation_2()}
+            if (operand == "("){Operation_1(this_operand)}
         }
         var specials:Map<String, (this_operand:String)->Unit> = mapOf(
             "+" to ::forPlus,
@@ -88,10 +93,12 @@ class Program(val listOfToken: MutableList<Token>) {
             "<" to ::forEndString,
             ">" to ::forEndString,
             "(" to ::forBegin,
-            ")" to ::forEnd
+            ")" to ::forEnd,
+            "%" to ::forRemainder
         )
         var length:Int = expression.length;
         val regex = Regex("[0-9]")
+        var past:String = "+"
         while (counter < length ) {
             var current:Char = expression[counter]
             var str: String = current.toString()
@@ -109,9 +116,11 @@ class Program(val listOfToken: MutableList<Token>) {
                 else{result.addAll(listOf(str))}
             }
             else {
+                if((!regex.containsMatchIn(past)) && (str == "-")){result.addAll(listOf("0"))}
                 specials[str]?.invoke(str)
             }
-            counter += 1
+            counter = counter+1
+            past = str
         }
         var arrayInvoice = ArrayDeque<Int>()
         fun Plus(arrayInvoice:ArrayDeque<Int>){
@@ -138,11 +147,18 @@ class Program(val listOfToken: MutableList<Token>) {
             var c = b/a
             arrayInvoice.addLast(c)
         }
+        fun Remainder(arrayInvoice:ArrayDeque<Int>){
+            var a = arrayInvoice.removeLast()
+            var b = arrayInvoice.removeLast()
+            var c = b%a
+            arrayInvoice.addLast(c)
+        }
         var operand: Map<String, (arrayInvoice:ArrayDeque<Int>) -> Unit> = mapOf(
             "+" to ::Plus,
             "-" to ::Minus,
             "*" to ::Multiplication,
-            "/" to ::Division
+            "/" to ::Division,
+            "%" to ::Remainder
         )
         while(result.size > 0){
             var current_2 = result.removeFirst()
