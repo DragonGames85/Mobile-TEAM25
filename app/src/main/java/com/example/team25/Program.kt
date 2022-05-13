@@ -1,16 +1,14 @@
 package com.example.team25
 
-import android.util.Log
 import java.util.*
 import kotlin.collections.ArrayDeque
 
 class Program(val listOfToken: MutableList<Token>) {
-    var values= mutableMapOf<String,String>()
+    var values= mutableMapOf<String,Int>()
     var valueForPrint: MutableList<Int> = mutableListOf()
 
     private fun parseExpression(expr: String): Int{
-        val expression = normalizeString(expr) + ">"
-        Log.i("Parse", expression)
+        val expression = normalizeString(expr)
         var counter = 0
         var steck = ArrayDeque<String>()
         var result = Vector<String>()
@@ -159,6 +157,9 @@ class Program(val listOfToken: MutableList<Token>) {
     fun print(expressionFromPrint: String){
         var ans:Int = parseExpression(expressionFromPrint)
     }
+
+
+
     private fun booleanParser(token: IfBranch):Boolean{
         val listOfComparisons = listOf("!=","==",">=","<=",">","<")
         val booleanExpression = token.boolExpression
@@ -184,8 +185,10 @@ class Program(val listOfToken: MutableList<Token>) {
     }
     private fun normalizeString(expression: String):String{
         val allFinds =  Regex("[a-z|A-Z]+(\\w)*").findAll(expression,0)
-        var newExpression = expression
+        var newExpression = ""
         for (i in allFinds){
+            println(i.value)
+            println(i.value)
             newExpression = expression.replace(i.value, values[i.value].toString())
         }
         return newExpression
@@ -201,13 +204,10 @@ class Program(val listOfToken: MutableList<Token>) {
         for(token in listOfToken){
             if(token is Variable){
                 if(values.contains(token.name)){
-                    values[token.name] = parseExpression(token.expression).toString()
+                    values[token.name] = parseExpression(token.expression)
                 }
-                else{
-                    Log.i("Token Name",token.name)
-                    Log.i("Token Exp",parseExpression(token.expression).toString())
-                    values[token.name] = parseExpression(token.expression).toString()
-                }
+                else
+                    values.plus(Pair(token.name, parseExpression(token.expression)))
             }
             if (token is Print){
                 valueForPrint.add(parseExpression(token.expression))
