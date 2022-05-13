@@ -1,14 +1,17 @@
 package com.example.team25
 
+import android.util.Log
 import java.util.*
 import kotlin.collections.ArrayDeque
 
 class Program(val listOfToken: MutableList<Token>) {
-    var values= mutableMapOf<String,Int>()
+    var values= mutableMapOf<String,String>()
     var valueForPrint: MutableList<Int> = mutableListOf()
+    var arrays = mutableMapOf<String,IntArray>()
 
     private fun parseExpression(expr: String): Int{
-        val expression = normalizeString(expr)
+        val expression = normalizeString(expr) + ">"
+        Log.i("Parse", expression)
         var counter = 0
         var steck = ArrayDeque<String>()
         var result = Vector<String>()
@@ -183,20 +186,40 @@ class Program(val listOfToken: MutableList<Token>) {
            else -> false
         }
     }
-    private fun normalizeString(expression: String):String{
-        val allFinds =  Regex("[a-z|A-Z]+(\\w)*").findAll(expression,0)
-        var newExpression = ""
-        for (i in allFinds){
-            println(i.value)
-            println(i.value)
-            newExpression = expression.replace(i.value, values[i.value].toString())
+    private fun parseArrayString(arrayString:String):List<String>{
+        val parseList = arrayString.split("[")
+        var name = parseList[0]
+        var index = ""
+        for (i in parseList[1]){
+            if (i!=']') index+=i
         }
-        return newExpression
+        return listOf(name, index)
     }
+   private fun normalizeString(expression: String):String{
+       var newExpression = expression
+       //Проверяем на наличие массивов
+       var matchResultForArray = Regex("[a-z|A-Z]+(\\w)*(\\[)(([a-z|A-Z]+(\\w)*)|(\\d*))(\\])").find(newExpression)
+       while(matchResultForArray  != null){
+           val parseString = parseArrayString(matchResultForArray.value)
+           val name = parseString[0]
+           val index = parseString[1]
+           newExpression = newExpression.replaceFirst(matchResultForArray .value, arrays[name]!![parseExpression(index)].toString())
+           println(newExpression)
+           matchResultForArray  = Regex("[a-z|A-Z]+(\\w)*").find(newExpression)
+       }
+       //Проверяем на наличие переменных
+       var matchResult = Regex("[a-z|A-Z]+(\\w)*").find(newExpression)
+       while(matchResult != null){
+           newExpression = newExpression.replaceFirst(matchResult.value, values[matchResult.value].toString())
+           println(newExpression)
+           matchResult = Regex("[a-z|A-Z]+(\\w)*").find(newExpression)
+       }
+       return newExpression
+   }
     fun print():String{
         var answer = ""
         for (i in valueForPrint){
-            answer+=(i.toString()+"\n")
+            answer+=(i.toString())
         }
         return answer
     }
@@ -204,17 +227,35 @@ class Program(val listOfToken: MutableList<Token>) {
         for(token in listOfToken){
             if(token is Variable){
                 if(values.contains(token.name)){
-                    values[token.name] = parseExpression(token.expression)
+                    values[token.name] = parseExpression(token.expression).toString()
                 }
-                else
-                    values.plus(Pair(token.name, parseExpression(token.expression)))
+                else{
+                    Log.i("Token Name",token.name)
+                    Log.i("Token Exp",parseExpression(token.expression).toString())
+                    values[token.name] = parseExpression(token.expression).toString()
+                }
             }
             if (token is Print){
                 valueForPrint.add(parseExpression(token.expression))
             }
 
+            if (token is Array){
+                arrays[token.name] = token.getElementsOfArray()
+            }
 
-
+            if(token is ArithmeticOperations){
+                val nameOfVariableOrArray = token.name
+                val expressionValue = parseExpression(token.expression)
+                if (nameOfVariableOrArray.contains("[")){
+                    val parseString = parseArrayString(nameOfVariableOrArray)
+                    val name = parseString[0]
+                    val index = parseString[1]
+                    arrays[name]!![parseExpression(index)] = expressionValue
+                }
+                else{
+                    values[token.name] = parseExpression(token.expression).toString()
+                }
+            }
             if (token is IfBranch){
                 val boolean = booleanParser(token)
                 if (boolean){
