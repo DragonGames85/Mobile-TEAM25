@@ -15,6 +15,7 @@ class Program(val listOfToken: MutableList<Token>) {
         var counter = 0
         var steck = ArrayDeque<String>()
         var result = Vector<String>()
+        var past = "+"
 
         steck.addLast("<")
         fun Operation_1(operator:String){
@@ -23,6 +24,7 @@ class Program(val listOfToken: MutableList<Token>) {
         fun Operation_2(){
             var operator = steck.removeLast()
             result.addAll(listOf(operator));
+            past = "#"
             counter = counter - 1
         }
         fun Operation_3(){
@@ -98,7 +100,6 @@ class Program(val listOfToken: MutableList<Token>) {
         )
         var length:Int = expression.length;
         val regex = Regex("[0-9]")
-        var past:String = "+"
         while (counter < length ) {
             var current:Char = expression[counter]
             var str: String = current.toString()
@@ -116,15 +117,16 @@ class Program(val listOfToken: MutableList<Token>) {
                 else{result.addAll(listOf(str))}
             }
             else {
-                if((!regex.containsMatchIn(past)) && (str == "-")){result.addAll(listOf("0"))}
+                if((!regex.containsMatchIn(past)) && (str == "-") && (past != "#")){result.addAll(listOf("0"))}
                 specials[str]?.invoke(str)
             }
             counter = counter+1
-            past = str
+            if (past != "#"){past = str}
         }
         var arrayInvoice = ArrayDeque<Int>()
         fun Plus(arrayInvoice:ArrayDeque<Int>){
-            var a = arrayInvoice.removeLast()
+            var a =
+                arrayInvoice.removeLast()
             var b = arrayInvoice.removeLast()
             var c = a+b
             arrayInvoice.addLast(c)
@@ -171,17 +173,16 @@ class Program(val listOfToken: MutableList<Token>) {
                 operand[current_2]?.invoke(arrayInvoice)
             }
         }
-       return arrayInvoice.last()
+        return arrayInvoice.last()
     }
+
     fun print(expressionFromPrint: String){
         var ans:Int = parseExpression(expressionFromPrint)
     }
 
-
-
-    private fun booleanParser(token: IfBranch):Boolean{
+    private fun booleanParser(booleanExpression: String):Boolean{
         val listOfComparisons = listOf("!=","==",">=","<=",">","<")
-        val booleanExpression = token.boolExpression
+        //val booleanExpression = token.boolExpression
         var firstExpression:String = ""
         var secondExpression: String = ""
         var comparison:String = ""
@@ -204,7 +205,7 @@ class Program(val listOfToken: MutableList<Token>) {
     }
     private fun parseArrayString(arrayString:String):List<String>{
         val parseList = arrayString.split("[")
-        var name = parseList[0]
+        val name = parseList[0]
         var index = ""
         for (i in parseList[1]){
             if (i!=']') index+=i
@@ -236,6 +237,7 @@ class Program(val listOfToken: MutableList<Token>) {
         var answer = ""
         for (i in valueForPrint){
             answer+=(i.toString())
+            answer+=" "
         }
         return answer
     }
@@ -272,8 +274,17 @@ class Program(val listOfToken: MutableList<Token>) {
                     values[token.name] = parseExpression(token.expression).toString()
                 }
             }
+            if (token is While){
+                val boolean = booleanParser(token.boolExpression)
+                val whileCodeProgram = Program(token.listOfTokenInWhile)
+                while (boolean){
+                    whileCodeProgram.values = values
+                    whileCodeProgram.run()
+                    valueForPrint += whileCodeProgram.valueForPrint
+                }
+            }
             if (token is IfBranch){
-                val boolean = booleanParser(token)
+                val boolean = booleanParser(token.boolExpression)
                 if (boolean){
                     val ifCodeProgram = Program(token.listOfTokenInIfBranch)
                     ifCodeProgram.values = values
