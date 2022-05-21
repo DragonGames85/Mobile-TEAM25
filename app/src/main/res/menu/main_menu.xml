@@ -15,4 +15,11 @@
         android:title="Clear"
         android:visible="true"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/console"
+        android:icon="@drawable/ic_baseline_featured_play_list_24"
+        android:orderInCategory="3"
+        android:title="Console"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
 </menu>

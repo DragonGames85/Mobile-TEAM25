@@ -2,4 +2,20 @@
     <string name="app_name">Team25</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name1">Зубов Данил</string>
+    <string name="name2">Линар Нафиков</string>
+    <string name="name3">Александра Вормсбехер</string>
+    <string name="elsename">els</string>
+    <string name="inputname">Input</string>
+    <string name="arrname">arr</string>
+    <string name="ifname">if</string>
+    <string name="ariname">Ari</string>
+    <string name="whilename">while</string>
+    <string name="name">print</string>
+    <string name="varname">Var</string>
+    <string name="nadproektom">Над проектом работали</string>
+    <string name="dojob">Приступить к работе</string>
+    <string name="interpre">Интерпретатор</string>
+    <string name="authors">Авторы</string>
+    <string name="consolename">Консоль</string>
 </resources>
